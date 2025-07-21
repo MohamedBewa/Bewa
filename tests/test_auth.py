@@ -5,3 +5,7 @@ def test_register_existing_username(client, auth):
     auth.register()
     response = client.post('/auth/register', data={'username': 'test', 'password': 'abc'})
     assert b'already registered' in response.data
+def test_login_invalid_password(client, auth):
+    auth.register()
+    response = client.post('/auth/login', data={'username': 'test', 'password': 'wrong'})
+    assert b'Incorrect password.' in response.data

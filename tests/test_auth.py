@@ -9,3 +9,7 @@ def test_login_invalid_password(client, auth):
     auth.register()
     response = client.post('/auth/login', data={'username': 'test', 'password': 'wrong'})
     assert b'Incorrect password.' in response.data
+def test_login_username_required(client):
+    response = client.post('/auth/login', data={'username': '', 'password': 'abc'})
+    assert b'Username is required.' in response.data
+
